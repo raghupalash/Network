@@ -1,0 +1,89 @@
+{% load static %}
+{% load mathfilters %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Social Network{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'network/styles.css'%}?{% now 'U' %}" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/1529df7cf5.js" crossorigin="anonymous"></script>
+
+        <script src="{% static 'network/edit.js' %}"></script>
+        <script src="{% static 'network/like.js' %}"></script>
+
+        {% csrf_token %}
+        <script>
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        </script>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#">Network</a>
+          
+            <div>
+              <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><strong>{{ user.username }}</strong></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'following' %}">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+        <hr>
+        
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <footer>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% if current != 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="{% url 'pages' data.page current|sub:1 %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for i in pages %}
+                            <li class="page-item"><a class="page-link pageLink" href="{% url 'pages' data.page i %}">{{ i }}</a></li>
+                        {% endfor %}
+                        
+                        {% if current != pages|last %}
+                            <li class="page-item">
+                                <a class="page-link" href="{% url 'pages' data.page current|add:1 %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </footer>
+        {% endif %}
+    </body>
+</html>

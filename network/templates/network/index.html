@@ -1,0 +1,47 @@
+{% extends "network/layout.html" %}
+
+
+{% block body %}
+    <div class="home-container container">
+        {% if data.page == "home" %}
+            <h3>Home</h3>
+        {% else %}
+            <h3>Following</h3>
+        {% endif %}
+        <hr>
+
+        {% if user.is_authenticated and data.page == "home" %}
+            <form action="{% url 'index' %}" method="POST"> 
+                {% csrf_token %}
+                <span><textarea name="post" placeholder="What's Happening?"></textarea></span>  
+                <button type="submit" class="btn btn-small twitter-btn">Post</button>
+            </form>
+            <hr>
+        {% endif %}
+
+        {% for post in posts %}
+            <a class="text-muted" href="{% url 'profile' post.user.username %}">{{ post.user.username }}</a>
+            <div id="post{{ post.id }}">
+                <p class="post"> {{ post.post }}</p>
+                {% if post.user == request.user %}
+                    <p class="edit text-muted" data-id="{{ post.id }}">edit</p>
+                {% endif %}
+                <span class="like" data-id="{{ post.id }}">
+                    <i class="far fa-heart"></i>
+                    <span>0</span>
+                    <span class="text-small text-muted">likes</span>
+                </span>
+                
+            </div>
+            {% if post.user == request.user %}
+                <form id="editForm{{ post.id }}" style="display: none;"> 
+                    <span><textarea data-content="{{ post.post }}"></textarea></span>  
+                    <button data-id="{{ post.id }}" type="submit" class="btn btn-small twitter-btn">Save</button>
+                </form>
+            {% endif %}
+            <p class="text-muted">{{ post.timestamp_created }}</p>
+            <hr>
+        {% endfor %}
+    </div>
+    
+{% endblock %}

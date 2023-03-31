@@ -1,0 +1,96 @@
+body {
+    background: rgb(21, 32, 43);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-brand {
+    font-size: 30px;
+}
+
+textarea {
+    height: 7rem;
+    width: 100%;
+    color: white;
+    background: rgb(21, 32, 43);
+    border: 0px;
+    margin: 15px 0;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background: rgb(15, 26, 37);
+}
+
+.home-container {
+    padding-top: 0;
+    margin-top: 0;
+    border-left: 2px solid rgb(15, 26, 37);
+    border-right: 2px solid rgb(15, 26, 37);
+    width: 60%;
+}
+
+/* style for submit button */
+.twitter-btn {
+    background: #00acee;
+    color: white;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-top: 10px;
+    float: right;
+}
+
+.home-container form {
+    margin-bottom: 80px;
+}
+
+/* for every profile photo */
+.home-container img {
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* style for post */
+.post {
+    border-left: 2px solid  rgb(15, 26, 37);
+    padding-left: 25px;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    background-color: transparent;
+    border: none;
+    float: left;
+}
+
+footer {
+    width: 50%;
+    margin: 40px auto;
+}
+
+.pagination {
+    padding-left: 17rem;
+}
+
+.fas {
+    color: red;
+    cursor: pointer;
+  }
+  
+.far {
+    color: #6c757d;
+    cursor: pointer;
+  }
+
+/* hover for edit */
+.edit:hover {
+    cursor: pointer;
+}
+
